@@ -7,52 +7,9 @@ library(testthat)
 library(readr)
 library(dplyr)
 library(ggplot2)
+
 mvskey <- read_csv("Regression Challenge Data.csv")
 mvskey <- data.frame(mvskey)
-movieselkey <- read_csv("Regression Challenge Selection Data.csv")
-movieselkey <- data.frame(movieselkey)
-
-mvskey$Day <- factor(mvskey$Day)
-mvskey$Hour <- factor(mvskey$Hour)
-mvskey$Stars <- factor(mvskey$Stars)
-mvskey$TrueStory <- factor(mvskey$TrueStory)
-mvskey$ChickFlick <- factor(mvskey$ChickFlick)
-mvskey$Action <- factor(mvskey$Action)
-mvskey$TVPremiere <- factor(mvskey$TVPremiere)
-mvskey$NetworkPremiere <- factor(mvskey$NetworkPremiere)
-mvskey$ReRun <- factor(mvskey$ReRun)
-
-mod2key <- lm(Rating ~ Stars + Day + Hour + TrueStory + ChickFlick + Action + TVPremiere +
-             ReRun + PrevRating + SpotRatings + DomesticGross, data = mvskey)
-
-residplotkey <- ggplot(mvskey, aes(x = DomesticGross, y = mod2key$residuals)) +
-  geom_point()
-
-modans <- lm(Rating ~ Stars + Day + Hour + TrueStory + ChickFlick + Action + TVPremiere + NetworkPremiere + ReRun + PrevRating + SpotRatings + DomesticGross + DG2, data = mvskey)
-modans$coefficients <- c(.7, .9, 1.4, 1.4, -.5, .4, 1, -.5, -.5, -.5, 1.1, .7, .7, .7, 1.25, .3, -.4, .35, .9, .3, -1.2, .18, .1, .04, -.00012)
-finsel <- movieselkey[MovieSelect[,1],]
-finsel$Day <- factor(MovieSelect[,2])
-finsel$Hour <- factor(MovieSelect[,3])
-finsel$SpotRatings <- MovieSelect[,4]
-finsel$ReRun <- c(0, 0, 0)
-if(finsel$MovieID[2] == finsel$MovieID[1]) {
-  finsel$ReRun[2] <- 1
-  finsel$License.Fee[2] <- finsel$License.Fee[2] * .75
-}
-if(finsel$MovieID[3] == finsel$MovieID[1]) {
-  finsel$ReRun[3] <- 1
-  finsel$License.Fee[3] <- finsel$License.Fee[3] * .75
-}
-if(finsel$MovieID[3] == finsel$MovieID[2]) {
-  finsel$ReRun[3] <- 1
-  if(finsel$MovieID[3] != finsel$MovieID[1]) {
-    finsel$License.Fee[3] <- finsel$License.Fee[3] * .75
-  }
-}
-finsel$ReRun <- factor(finsel$ReRun)
-finsel$PrevRating <- c(3, 3, 3)
-
-profit <- sum(predict(modans, newdata = finsel))*2400000 - sum(finsel$License.Fee)
 
 test_that("Q2 (visible)", {
   
@@ -83,6 +40,12 @@ test_that("Q26 (visible)", {
   expect_equal(as.numeric(mod2$coefficients[17]), -.5371966, tolerance = 1e-2)
   
 })
+
+mod2key <- lm(Rating ~ Stars + Day + Hour + TrueStory + ChickFlick + Action + TVPremiere +
+                ReRun + PrevRating + SpotRatings + DomesticGross, data = mvskey)
+
+residplotkey <- ggplot(mvskey, aes(x = DomesticGross, y = mod2key$residuals)) +
+  geom_point()
 
 test_that("Q29 plot (visible)", {
   
@@ -166,6 +129,34 @@ test_that("Q48 (visible)", {
   
 })
 
+movieselkey <- read_csv("Regression Challenge Selection Data.csv")
+moviesel <- data.frame(movieselkey)
+
+modans <- lm(Rating ~ Stars + Day + Hour + TrueStory + ChickFlick + Action + TVPremiere + NetworkPremiere + ReRun + PrevRating + SpotRatings + DomesticGross + DG2, data = mvskey)
+modans$coefficients <- c(.7, .9, 1.4, 1.4, -.5, .4, 1, -.5, -.5, -.5, 1.1, .7, .7, .7, 1.25, .3, -.4, .35, .9, .3, -1.2, .18, .1, .04, -.00012)
+finsel <- movieselkey[MovieSelect[,1],]
+finsel$Day <- factor(MovieSelect[,2])
+finsel$Hour <- factor(MovieSelect[,3])
+finsel$SpotRatings <- MovieSelect[,4]
+finsel$ReRun <- c(0, 0, 0)
+if(finsel$MovieID[2] == finsel$MovieID[1]) {
+  finsel$ReRun[2] <- 1
+  finsel$License.Fee[2] <- finsel$License.Fee[2] * .75
+}
+if(finsel$MovieID[3] == finsel$MovieID[1]) {
+  finsel$ReRun[3] <- 1
+  finsel$License.Fee[3] <- finsel$License.Fee[3] * .75
+}
+if(finsel$MovieID[3] == finsel$MovieID[2]) {
+  finsel$ReRun[3] <- 1
+  if(finsel$MovieID[3] != finsel$MovieID[1]) {
+    finsel$License.Fee[3] <- finsel$License.Fee[3] * .75
+  }
+}
+finsel$ReRun <- factor(finsel$ReRun)
+finsel$PrevRating <- c(3, 3, 3)
+
+profit <- sum(predict(modans, newdata = finsel))*2400000 - sum(finsel$License.Fee)
 
 test_that("Extra Credit Top10 Point1 (visible)", {
   
