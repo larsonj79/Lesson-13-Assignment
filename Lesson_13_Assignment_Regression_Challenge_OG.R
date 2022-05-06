@@ -1,4 +1,4 @@
-# Lesson 12 Assignment - Regression Part 2
+# Lesson 13 Assignment - Regression Challenge
 
 # Your assignment is to write the commands instructed in the comments below. To run your
 # commands, simply hit Ctrl+Enter (command+return on a MAC) when the cursor is on that 
@@ -203,7 +203,7 @@ moviesel <- data.frame(moviesel)
 #27. Are any of the variables now not statistically significant?
 # *ENTER ANSWER HERE*
 
-# 28. If so, run another regression model (mod3) in the code chunk below that removes
+#28. If so, run another regression model (mod3) in the code chunk below that removes
 # this/these non-significant variable(s). Otherwise, leave the space below blank.
 
 
@@ -241,7 +241,7 @@ moviesel <- data.frame(moviesel)
 # *Rating*. The problem is that a one-unit increase in this new variable is not 
 # straightforward.
 
-# 33. Did incorporating this new variable improve your model? By how much did 
+#33. Did incorporating this new variable improve your model? By how much did 
 # R-Squared improve?
 # *ENTER ANSWER HERE*
 
@@ -292,7 +292,7 @@ moviesel <- data.frame(moviesel)
 # account for the nonlinear relationship.
 
 
-#Now, take stock of the variables that are missing from the Selection Data. We are 
+# Now, take stock of the variables that are missing from the Selection Data. We are 
 # missing all of the data that is not a characteristic of the movie itself. So we 
 # are missing *Day*, *Hour*, *ReRun*, *PrevRating*, and *SpotRatings*. These are 
 # variables that you as the VP of programming at TNT choose. You choose what *Day* 
@@ -396,10 +396,10 @@ MovieSelect$Hour[3] <-
 MovieSelect$SpotRatings[3] <- 
   
   
-  #49. Print MovieSelect to the screen to make sure your selections are correct.
+#49. Print MovieSelect to the screen to make sure your selections are correct.
   
   
-  # I will be granting 10 points extra credit to students whose decisions are in the 
-  # top 5% of profitability. I will be granting 5 points extra credit to students whose 
-  # decisions are in the next highest 10% of profitability.
+# I will be granting 10 points extra credit to students whose decisions are in the 
+# top 5% of profitability. I will be granting 5 points extra credit to students whose 
+# decisions are in the next highest 10% of profitability.
   
