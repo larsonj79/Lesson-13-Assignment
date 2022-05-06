@@ -8,8 +8,8 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 mvskey <- read_csv("Regression Challenge Data.csv")
-movieselkey <- read_csv("Regression Challenge Selection Data.csv")
 mvskey <- data.frame(mvskey)
+movieselkey <- read_csv("Regression Challenge Selection Data.csv")
 movieselkey <- data.frame(movieselkey)
 
 mvskey$Day <- factor(mvskey$Day)
@@ -28,9 +28,9 @@ mod2key <- lm(Rating ~ Stars + Day + Hour + TrueStory + ChickFlick + Action + TV
 residplotkey <- ggplot(mvskey, aes(x = DomesticGross, y = mod2key$residuals)) +
   geom_point()
 
-modans <- lm(Rating ~ Stars + Day + Hour + TrueStory + ChickFlick + Action + TVPremiere + NetworkPremiere + ReRun + PrevRating + SpotRatings + DomesticGross + DG2, data = mvs)
+modans <- lm(Rating ~ Stars + Day + Hour + TrueStory + ChickFlick + Action + TVPremiere + NetworkPremiere + ReRun + PrevRating + SpotRatings + DomesticGross + DG2, data = mvskey)
 modans$coefficients <- c(.7, .9, 1.4, 1.4, -.5, .4, 1, -.5, -.5, -.5, 1.1, .7, .7, .7, 1.25, .3, -.4, .35, .9, .3, -1.2, .18, .1, .04, -.00012)
-finsel <- moviesel[MovieSelect[,1],]
+finsel <- movieselkey[MovieSelect[,1],]
 finsel$Day <- factor(MovieSelect[,2])
 finsel$Hour <- factor(MovieSelect[,3])
 finsel$SpotRatings <- MovieSelect[,4]
